@@ -12,7 +12,7 @@ pub(crate) const PARTICIPATE: &str = "PARTICIPATE";
 /// Event id for the shimmer staking
 pub(crate) const SHIMMER_EVENT_ID: &str = "24a2e624d3416a323a542b0c5c715783dd125b0f3fd51f6cceda0707806726ae";
 /// Event id for the assembly staking
-pub(crate) const ASSEMBLY_EVENT_ID: &str = "249dfc25efde867884ff083e35f8df4e32bd0abb40862b6304203a27f0e1e5d0";
+pub(crate) const ASSEMBLY_EVENT_ID: &str = "00504de104319e2bb45348833d0a023b791d25d8ab64a0f0ead945182029b500";
 
 /// Possible participation event types
 pub enum ParticipationEventType {
