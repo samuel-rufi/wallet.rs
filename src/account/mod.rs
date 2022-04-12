@@ -1064,6 +1064,7 @@ impl AccountHandle {
 
         let mut processed_outputs: HashSet<iota_client::bee_message::output::OutputId> = HashSet::new();
 
+        #[allow(clippy::type_complexity)]
         let (_, _, mut tracked_participations, spent_output_status_responses): (
             u64,
             u64,
@@ -1079,6 +1080,7 @@ impl AccountHandle {
         }
 
         // Get unspent outputs separated, to know the correct staked funds
+        #[allow(clippy::type_complexity)]
         let (shimmer_staked_funds, assembly_staked_funds, unspent_tracked_participations, output_status_responses): (
             u64,
             u64,
