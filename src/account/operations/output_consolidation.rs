@@ -69,13 +69,11 @@ impl AccountHandle {
             // and is <= max inputs
             for outputs in outputs_on_one_address.chunks(16) {
                 let output_sum = outputs.iter().map(|o| o.amount).sum();
-                let consolidation_output = vec![
-                    BasicOutputBuilder::new_with_amount(output_sum)?
-                        .add_unlock_condition(UnlockCondition::Address(AddressUnlockCondition::new(
-                            outputs[0].address,
-                        )))
-                        .finish_output()?,
-                ];
+                let consolidation_output = vec![BasicOutputBuilder::new_with_amount(output_sum)?
+                    .add_unlock_condition(UnlockCondition::Address(AddressUnlockCondition::new(
+                        outputs[0].address,
+                    )))
+                    .finish_output()?];
                 match self
                     .finish_transfer(
                         consolidation_output,
