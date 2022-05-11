@@ -35,9 +35,9 @@ pub use primitive_types::U256;
 
 pub use self::{
     account::operations::transfer::high_level::{
-        destroy_alias::AliasOptions, mint_native_token::NativeTokenOptions, mint_nfts::NftOptions,
-        send_amount::AddressWithAmount, send_micro_transaction::AddressWithMicroAmount,
-        send_native_tokens::AddressNativeTokens, send_nft::AddressAndNftId,
+        mint_native_token::NativeTokenOptions, mint_nfts::NftOptions, send_amount::AddressWithAmount,
+        send_micro_transaction::AddressWithMicroAmount, send_native_tokens::AddressNativeTokens,
+        send_nft::AddressAndNftId,
     },
     error::Error,
 };
