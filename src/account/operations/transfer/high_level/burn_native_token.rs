@@ -3,8 +3,6 @@
 
 use std::cmp::Ordering;
 
-use crate::account::{handle::AccountHandle, operations::transfer::TransferResult, TransferOptions};
-
 use iota_client::bee_message::{
     address::AliasAddress,
     output::{
@@ -14,6 +12,8 @@ use iota_client::bee_message::{
     },
 };
 use primitive_types::U256;
+
+use crate::account::{handle::AccountHandle, operations::transfer::TransferResult, TransferOptions};
 
 impl AccountHandle {
     /// Function to burn native tokens with foundry
@@ -206,7 +206,7 @@ fn replace_output_native_tokens(
         Output::Treasury(_) => {
             return Err(crate::Error::InvalidOutputKind(
                 "Treasury output cannot hold native tokens".to_string(),
-            ))
+            ));
         }
     };
 
@@ -242,7 +242,7 @@ fn add_native_token_to_output(output: &Output, native_token: NativeToken) -> cra
         Output::Treasury(_) => {
             return Err(crate::Error::InvalidOutputKind(
                 "Treasury output cannot hold native tokens".to_string(),
-            ))
+            ));
         }
     };
 
