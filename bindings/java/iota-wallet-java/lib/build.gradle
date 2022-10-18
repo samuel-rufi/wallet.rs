@@ -116,8 +116,8 @@ publishing {
 }
 
 signing {
-    // The ascii armored signing key contains important new line characters that are lost when loading the content with: `def signingKey = findProperty("signingKey"))`
-    // To solve this, encode the ascii armored signing key in base64 and store it in the `ORG_GRADLE_PROJECT_base64EncodedAsciiArmoredSigningKey` environment variable.
+    // The ASCII armored signing key contains important new line characters that are lost when loading the content for example like: `def signingKey = findProperty("signingKey"))`
+    // To solve this, encode the ASCII armored signing key in base64 and store it in the `ORG_GRADLE_PROJECT_base64EncodedAsciiArmoredSigningKey` environment variable.
     // The following line will decode it correctly:
     def signingKey = base64Decode(findProperty("base64EncodedAsciiArmoredSigningKey"))
     def signingPassword = findProperty("signingPassword")
