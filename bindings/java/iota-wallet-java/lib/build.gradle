@@ -14,8 +14,8 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
     // Dependencies that are used internally, and not exposed to consumers on their own compile classpath.
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
