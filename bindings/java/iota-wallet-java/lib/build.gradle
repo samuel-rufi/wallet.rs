@@ -7,9 +7,6 @@ plugins {
     id 'com.google.osdetector' version '1.7.1'
 }
 
-group 'org.iota'
-version '1.0.0-rc.1'
-
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -119,5 +116,8 @@ publishing {
 }
 
 signing {
+    def signingKey = GPG_SIGNING_KEY
+    def signingPassword = findProperty("signingPassword")
+    useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
 }
