@@ -83,13 +83,12 @@ jobs:
           distribution: 'temurin'
       - name: Release to Sonatype
         env:
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_base64EncodedAsciiArmoredSigningKey: ${{ secrets.ORG_GRADLE_PROJECT_BASE64_ENCODED_ASCII_ARMORED_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PASSWORD }}
         shell: bash
         working-directory: bindings/java/iota-wallet-java/
         run: |
-          printf '%s\n' "$ORG_GRADLE_PROJECT_signingKey" >gradle.properties
           chmod +x gradlew
           ./gradlew publishToSonatype
