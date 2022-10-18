@@ -126,7 +126,10 @@ signing {
 }
 
 def base64Decode(encodedString){
-    byte[] decoded = encodedString.decodeBase64()
-    String decode = new String(decoded)
-    return decode
+    if(encodedString != null) {
+        byte[] decoded = encodedString.decodeBase64()
+        String decode = new String(decoded)
+        return decode
+    }
+    return null;
 }
