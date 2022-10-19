@@ -12,8 +12,8 @@ on:
       - Cargo.toml
 
 jobs:
-  my-maven-release:
-    name: Test
+  build-x86_64:
+    name: Build x86_64
     if: ${{ ! github.event.schedule }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -93,8 +93,8 @@ jobs:
           chmod +x gradlew
           ./gradlew publishToSonatype
 
-  compile-aarch64-apple-darwin:
-    name: Compile aarch64-apple-darwin
+  build-aarch64-apple-darwin:
+    name: Build aarch64-apple-darwin
     if: ${{ ! github.event.schedule }}
     runs-on: ${{ matrix.os }}
     strategy:
