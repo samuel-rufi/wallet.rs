@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.4-rc.0]
+
+- Add `sender`, `tag` and `issuer` fields to `NftOptions`.
+  - [0e787c09](https://github.com/iotaledger/wallet.rs/commit/0e787c0954ee044a5f2d0ce0922b0a6b192ae98f) Test Push on 2022-10-21
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -47,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `emitTestEvent`;
   - `bech32ToHex`;
   - `hexToBech32`;
+
 - `AccountHandle` APIs:
   - `buildAliasOutput`;
   - `buildBasicOutput`;
@@ -109,7 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `SendNativeToken`;
   - `SendNft`;
   - `SyncAccount`;
-  
+
 ### Changed
 
 - Rust interaction through a JSON passing approach;
