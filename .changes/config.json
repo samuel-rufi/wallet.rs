@@ -59,7 +59,6 @@
       "getPublishedVersion": "curl 'https://search.maven.org/solrsearch/select?q=g:io.github.samuel-rufi+AND+a:my-test&core=gav&rows=1&wt=json' | grep -oP '(?<=v\":\").*?(?=\")'",
       "prepublish": [],
       "publish": [
-
       ]
     }
   }
