@@ -1,6 +1,7 @@
 {
   "tag": "rc",
   "changes": [
+    ".changes/license-bump.md",
     ".changes/new-java-version.md"
   ]
 }

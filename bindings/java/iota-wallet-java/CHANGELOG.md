@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.1-rc.1]
+
+- Adjust license once more
+  - [900903f3](https://github.com/iotaledger/wallet.rs/commit/900903f38cd52d1ba1275b56e8687ea98a490e60) Adjust license once more on 2022-10-21
+
 ## \[1.0.1-rc.0]
 
 - Fix abc.
