@@ -40,6 +40,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: 'version-or-publish'
+
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
         uses: iotaledger/create-pull-request@v3.4.1
@@ -51,10 +52,10 @@ jobs:
           labels: "version updates"
           body: ${{ steps.covector.outputs.change }}
 
-  java-binding-prebuild:
+  java-binding-github-release:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    if: needs.version-or-publish.outputs.successfulPublish == 'true'
+    if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
     strategy:
       fail-fast: false
       matrix:
