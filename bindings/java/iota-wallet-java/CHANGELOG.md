@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.1-rc.0]
+
+- Fix xyz.
+  - [c1a61fd0](https://github.com/iotaledger/wallet.rs/commit/c1a61fd0e058d2b8bb6f18da35081f962817c175) XYZ on 2022-10-21
+
 ## 1.0.0-rc.1 - 2022-10-06
 
 ### Added
