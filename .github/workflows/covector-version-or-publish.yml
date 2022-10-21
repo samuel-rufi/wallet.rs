@@ -136,4 +136,3 @@ jobs:
           tag: java-binding-v
           overwrite: true
           file_glob: true
-          
