@@ -1,5 +1,13 @@
 # Changelog
 
+## \[1.0.1-rc.0]
+
+- Fix abc.
+  - [c1a61fd0](https://github.com/iotaledger/wallet.rs/commit/c1a61fd0e058d2b8bb6f18da35081f962817c175) XYZ on 2022-10-21
+  - [d2da37f6](https://github.com/iotaledger/wallet.rs/commit/d2da37f64ad01e06906df37f90a80053536e724c) XYZ on 2022-10-21
+  - [914e8e77](https://github.com/iotaledger/wallet.rs/commit/914e8e7781be81ce407424cf6699937a31e2f34a) ABC on 2022-10-21
+  - [00f09326](https://github.com/iotaledger/wallet.rs/commit/00f09326019a4f0a42cf41604f92ad40a0c9517a) ABC on 2022-10-21
+
 ## 1.0.0-rc.1 - 2022-10-06
 
 ### Added
