@@ -8,7 +8,9 @@
     ".changes/nft-options-features.md",
     ".changes/private-account-meta.md",
     ".changes/remove-deleteAccountsAndDatabase.md",
+    ".changes/remove-list-prefix-java.md",
     ".changes/remove-list-prefix.md",
+    ".changes/s-options-features-java.md",
     ".changes/uint8array-replace-number-array.md.md"
   ]
 }

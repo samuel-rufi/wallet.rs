@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.4-rc.1]
+
+- Add `sender`, `tag` and `issuer` fields to `NftOptions`.
+  - [7b385587](https://github.com/iotaledger/wallet.rs/commit/7b38558789b335702eff3498540f56c96e498e74) Test on 2022-10-21
+
 ## \[2.0.4-rc.0]
 
 - Add `sender`, `tag` and `issuer` fields to `NftOptions`.

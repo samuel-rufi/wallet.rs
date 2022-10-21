@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.3-rc.2]
+
+- Remove `list` prefix from functions.
+  - [3d8b2ca4](https://github.com/iotaledger/wallet.rs/commit/3d8b2ca406fa8f89a95e9bf054f3f491651d5ff8) Test on 2022-10-21
+
 ## \[2.0.3-rc.1]
 
 - Add getAccountIndexes().
