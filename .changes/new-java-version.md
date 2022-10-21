@@ -1,5 +1,5 @@
 ---
-"java-binding": patch
+"java-binding": rc
 ---
 
 Fix abc.
