@@ -55,7 +55,7 @@ jobs:
   java-binding-github-release:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
+    if: needs.version-or-publish.outputs.successfulPublish == 'true'
     strategy:
       fail-fast: false
       matrix:
