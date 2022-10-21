@@ -2,4 +2,4 @@
 "java-binding": patch
 ---
 
-Fix xyz.
+Fix abc.
