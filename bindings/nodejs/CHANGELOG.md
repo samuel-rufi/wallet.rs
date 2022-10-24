@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.0.3-rc.2]
+
+- Fixed NFT output claiming.
+  - [60d55da0](https://github.com/iotaledger/wallet.rs/commit/60d55da011ae0f8b6c0288aa8a96411d20b2b191) Fix NFT output claiming ([#1504](https://github.com/iotaledger/wallet.rs/pull/1504)) on 2022-10-19
+- Add transaction essence and payload length validation.
+  - [3949b95c](https://github.com/iotaledger/wallet.rs/commit/3949b95ce2740cdcbe9775a542336a0261d601b7) Tx length validation ([#1500](https://github.com/iotaledger/wallet.rs/pull/1500)) on 2022-10-21
+
 ## \[2.0.3-rc.1]
 
 - Add getAccountIndexes().
