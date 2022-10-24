@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.2-rc.0]
+
+- Fix abc.
+  - [9b6e8782](https://github.com/iotaledger/wallet.rs/commit/9b6e8782f04e823216bbd1d87d2cef7be0c1767e) New release on 2022-10-24
+
 ## \[1.0.0-rc.1]
 
 ### Added
