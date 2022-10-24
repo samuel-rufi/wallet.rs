@@ -12,6 +12,7 @@ jobs:
       change: ${{ steps.covector.outputs.change }}
       commandRan: ${{ steps.covector.outputs.commandRan }}
       successfulPublish: ${{ steps.covector.outputs.successfulPublish }}
+      packageName: ${{ steps.covector.outputs.packagesPublished }}
 
     steps:
       - uses: actions/checkout@v3
@@ -61,7 +62,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
     if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
-      contains(needs.covector.outputs.packagesPublished, 'nodejs-binding')
+      contains(needs.version-or-publish.packageName, 'nodejs-binding')
     strategy:
       fail-fast: false
       matrix:
@@ -150,7 +151,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
     if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
-      contains(needs.covector.outputs.packagesPublished, 'nodejs-binding')
+      contains(needs.version-or-publish.packageName, 'nodejs-binding')
     strategy:
       fail-fast: false
       matrix:
@@ -235,7 +236,8 @@ jobs:
   java-binding-github-release:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    if: needs.version-or-publish.outputs.successfulPublish == 'true'
+    if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
+      contains(needs.version-or-publish.packageName, 'java-binding')
     strategy:
       fail-fast: false
       matrix:
