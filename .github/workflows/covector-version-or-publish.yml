@@ -55,7 +55,8 @@ jobs:
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    if: needs.version-or-publish.outputs.successfulPublish == 'true'
+    if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
+      contains(needs.covector.outputs.packagesPublished, 'nodejs-binding')
     strategy:
       fail-fast: false
       matrix:
@@ -143,7 +144,8 @@ jobs:
   electron-binding-prebuild:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    if: needs.version-or-publish.outputs.successfulPublish == 'true'
+    if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
+      contains(needs.covector.outputs.packagesPublished, 'nodejs-binding')
     strategy:
       fail-fast: false
       matrix:
