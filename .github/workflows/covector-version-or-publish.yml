@@ -244,7 +244,7 @@ jobs:
       - name: Read output
           Use the steps context variable and step id to get the value
         run: |
-          echo "${{needs.covector.outputs.packagesPublished}}"
+          echo "${{needs.version-or-publish.outputs.packagesPublished}}"
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
