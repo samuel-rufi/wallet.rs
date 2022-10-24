@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0-rc.3]
+
+- Breaking changes
+  - [6fae860f](https://github.com/iotaledger/wallet.rs/commit/6fae860f377e322b5d90cfe82b5743e35a6be368) Breaking Java changes on 2022-10-24
+
 ## \[1.0.0-rc.2]
 
 - Test release
