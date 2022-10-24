@@ -1,5 +1,6 @@
 {
   "tag": "rc",
   "changes": [
+    ".changes/test-release.md"
   ]
 }
