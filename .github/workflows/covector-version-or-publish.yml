@@ -230,14 +230,7 @@ jobs:
   java-binding-github-release:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    name: Read output
-      Use the steps context variable and step id to get the value
-
-    run: |
-      echo "${{needs.covector.outputs.packagesPublished}}"
- 
-    if: needs.version-or-publish.outputs.successfulPublish == 'true' &&
-      contains(needs.covector.outputs.packagesPublished, 'java-binding')
+    if: needs.version-or-publish.outputs.successfulPublish == 'true' 
     strategy:
       fail-fast: false
       matrix:
@@ -246,6 +239,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Read output
+          Use the steps context variable and step id to get the value
+        run: |
+          echo "${{needs.covector.outputs.packagesPublished}}"
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
