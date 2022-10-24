@@ -222,11 +222,9 @@ jobs:
         working-directory: bindings/nodejs
 
   java-binding-github-release:
-    if: |
-      steps.covector.outputs.successfulPublish == 'true' &&
-      contains(steps.covector.outputs.packagesPublished, 'cli.rs')
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
+    if: needs.version-or-publish.outputs.successfulPublish == 'true'
     strategy:
       fail-fast: false
       matrix:
