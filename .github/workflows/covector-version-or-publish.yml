@@ -12,7 +12,7 @@ jobs:
       change: ${{ steps.covector.outputs.change }}
       commandRan: ${{ steps.covector.outputs.commandRan }}
       successfulPublish: ${{ steps.covector.outputs.successfulPublish }}
-      packagesPublished: ${{ steps.covector.outputs.packagesPublished }}
+      packagesPublished: ${{ steps.covector.outputs.java-binding.published }}
 
     steps:
       - uses: actions/checkout@v3
