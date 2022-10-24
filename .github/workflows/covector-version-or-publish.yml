@@ -223,6 +223,10 @@ jobs:
         run: npx prebuild --upload-all ${{ secrets.GITHUB_TOKEN }} --tag-prefix nodejs-binding-v
         working-directory: bindings/nodejs
 
+      - name: Echo outputs
+        run: |
+          echo version-or-publish.outputs.successfulPublish
+
   java-binding-github-release:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
