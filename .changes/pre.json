@@ -9,5 +9,6 @@
     ".changes/remove-deleteAccountsAndDatabase.md",
     ".changes/remove-list-prefix.md",
     ".changes/init-java-binding-version.md"
+    
   ]
 }
