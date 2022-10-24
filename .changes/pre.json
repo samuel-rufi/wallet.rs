@@ -1,6 +1,7 @@
 {
   "tag": "rc",
   "changes": [
+    ".changes/breaking-change.md",
     ".changes/init.md",
     ".changes/test-release.md"
   ]
