@@ -53,6 +53,11 @@ jobs:
           labels: "version updates"
           body: ${{ steps.covector.outputs.change }}
 
+      - name: Read output
+          Use the steps context variable and step id to get the value
+        run: |
+          echo "${{steps.covector.outputs.packagesPublished}}"
+
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
@@ -240,11 +245,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Read output
-          Use the steps context variable and step id to get the value
-        run: |
-          echo "${{needs.version-or-publish.outputs.packagesPublished}}"
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
