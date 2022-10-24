@@ -224,10 +224,7 @@ jobs:
   java-binding-github-release:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
-    if: |
-      steps.covector.outputs.successfulPublish == 'true' &&
-      contains(steps.covector.outputs.packagesPublished, 'java-binding')
-      uses: peter-evans/repository-dispatch@v1
+    if: contains(steps.covector.outputs.packagesPublished, 'java-binding')
     strategy:
       fail-fast: false
       matrix:
