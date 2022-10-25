@@ -1,5 +1,5 @@
 ---
-"java": patch
+"java-binding": patch
 ---
 
 Some breaking changes.
