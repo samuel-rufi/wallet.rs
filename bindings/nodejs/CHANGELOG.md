@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.0.3-rc.2]
+
+- Add transaction essence and payload length validation.
+  - [3949b95c](https://github.com/iotaledger/wallet.rs/commit/3949b95ce2740cdcbe9775a542336a0261d601b7) Tx length validation ([#1500](https://github.com/iotaledger/wallet.rs/pull/1500)) on 2022-10-21
+- Use `Uint8Array` over `number[]` in `IAliasOutputBuilderOptions` and other places to better reflect the type requirements.
+  - [e63ace19](https://github.com/iotaledger/wallet.rs/commit/e63ace1969c7b815046eda7ae65ef3bde3ee2449) Use `Uint8Array` over `number[]` ([#1457](https://github.com/iotaledger/wallet.rs/pull/1457)) on 2022-09-23
+
 ## \[2.0.3-rc.1]
 
 - Add getAccountIndexes().
