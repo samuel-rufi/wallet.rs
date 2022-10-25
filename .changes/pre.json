@@ -13,7 +13,5 @@
     ".changes/private-account-meta.md",
     ".changes/remove-deleteAccountsAndDatabase.md",
     ".changes/remove-list-prefix.md",
-    ".changes/tx-len-validation.md",
-    ".changes/uint8array-replace-number-array.md.md"
   ]
 }
