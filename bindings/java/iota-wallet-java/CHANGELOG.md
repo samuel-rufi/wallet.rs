@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0-rc.3]
+
+- Release 1.0.0-rc.3
+  - [f01ae789](https://github.com/iotaledger/wallet.rs/commit/f01ae78911b78cceb67e0132187ab009fa4adc7f) Release 1.0.0-rc.3 on 2022-10-24
+
 ## \[1.0.0-rc.2]
 
 - This is a breaking change
