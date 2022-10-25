@@ -12,6 +12,6 @@
     ".changes/nft-output-claiming.md",
     ".changes/private-account-meta.md",
     ".changes/remove-deleteAccountsAndDatabase.md",
-    ".changes/remove-list-prefix.md",
+    ".changes/remove-list-prefix.md"
   ]
 }
