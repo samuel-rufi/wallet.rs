@@ -299,7 +299,7 @@ jobs:
         shell: bash
         id: release-version
         run: echo "RELEASE_VERSION=`echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version'`" >> $GITHUB_OUTPUT
-
+ 
       - name: Get release tag
         shell: bash
         id: release-tag
