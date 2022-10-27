@@ -298,12 +298,12 @@ jobs:
       - name: Get release version
         shell: bash
         id: release-version
-        run: echo "RELEASE_VERSION=`echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version'` >> $GITHUB_OUTPUT
+        run: echo "RELEASE_VERSION=`echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version'`" >> $GITHUB_OUTPUT
 
       - name: Get release tag
         shell: bash
         id: release-tag
-        run: echo "RELEASE_TAG=`echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.releaseTag'` >> $GITHUB_OUTPUT
+        run: echo "RELEASE_TAG=`echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.releaseTag'`" >> $GITHUB_OUTPUT
 
       - name: Echo x
         run: |
