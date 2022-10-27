@@ -56,7 +56,7 @@ jobs:
 
       - name: Echo outputs
         run: |
-          echo 'steps.covector.outputs.packagesPublished'
+          echo '${{ steps.covector.outputs.packagesPublished }}'
 
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
