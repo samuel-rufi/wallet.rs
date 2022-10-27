@@ -335,6 +335,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         shell: bash
         working-directory: bindings/java/iota-wallet-java/
+        env:
+          ORG_GRADLE_PROJECT_buildTarget: aarch64-apple-darwin
         run: |
           chmod +x gradlew
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
