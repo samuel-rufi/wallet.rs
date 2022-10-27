@@ -300,14 +300,14 @@ jobs:
         id: release-version
         run: |
           version=$(echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version')
-          echo "RELEASE_VERSION=$(version)" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$version" >> $GITHUB_OUTPUT
 
       - name: Get release tag
         shell: bash
         id: release-tag
         run: |
           tag=$(echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.releaseTag')
-          echo "RELEASE_TAG=$(tag)" >> $GITHUB_OUTPUT
+          echo "RELEASE_TAG=$tag" >> $GITHUB_OUTPUT
 
       - name: Echo x
         run: |
