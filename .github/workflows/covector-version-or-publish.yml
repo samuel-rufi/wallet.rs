@@ -54,6 +54,10 @@ jobs:
           labels: "version updates"
           body: ${{ steps.covector.outputs.change }}
 
+      - name: Echo outputs
+        run: |
+          echo 'steps.covector.outputs.packagesPublished'
+
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
     needs: version-or-publish
@@ -300,15 +304,12 @@ jobs:
         working-directory: bindings/java/iota-wallet-java/
         run: |
           chmod +x gradlew
-          ./gradlew jar -PprojectVersion=${{ needs.version-or-publish.packagesPublished.java-binding.version }}
+          ./gradlew jar -PprojectVersion=${{ needs.version-or-publish.packagesPublished.java-binding.pkg.pkgFile.version }}
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: bindings/java/iota-wallet-java/lib/build/libs/*
-          asset_name: iota-wallet-java-
-          tag: java-binding-v
+          tag: ${{ needs.version-or-publish.packagesPublished.java-binding.pkg.releaseTag }}
           overwrite: false
           file_glob: true
-
-
