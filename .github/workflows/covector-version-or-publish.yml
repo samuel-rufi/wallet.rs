@@ -56,7 +56,7 @@ jobs:
 
       - name: Echo outputs
         run: |
-          echo '${{ toJSON(steps.covector.outputs) }}'
+          echo '${{ steps.covector.outputs.change.java-binding.pkg.pkgFile.version }}'
 
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
