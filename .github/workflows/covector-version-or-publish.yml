@@ -13,7 +13,7 @@ jobs:
       commandRan: ${{ steps.covector.outputs.commandRan }}
       successfulPublish: ${{ steps.covector.outputs.successfulPublish }}
       packagesPublished: ${{ steps.covector.outputs.packagesPublished }}
-      packageVersion: ${{ steps.covector.outputs.packagesPublished }}
+      packageVersion: ${{ steps.random-color-generator.outputs.PROJECT_VERSION }}
 
     steps:
       - uses: actions/checkout@v3
@@ -53,10 +53,6 @@ jobs:
           commit-message: "apply version updates"
           labels: "version updates"
           body: ${{ steps.covector.outputs.change }}
-
-      - name: Echo outputs
-        run: |
-          echo ${{ toJson(steps.covector.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version'
 
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
@@ -299,17 +295,26 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
+
+      - name: Get release version
+        id: release-version
+        run: echo "RELEASE_VERSION=$(echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version')" >> $GITHUB_OUTPUT
+
+      - name: Get release tag
+        id: release-tag
+        run: echo "RELEASE_TAG=$(echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.releaseTag')" >> $GITHUB_OUTPUT
+
       - name: Build JAR
         shell: bash
         working-directory: bindings/java/iota-wallet-java/
         run: |
           chmod +x gradlew
-          ./gradlew jar -PprojectVersion="$(echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.pkgFile.version')"
+          ./gradlew jar -PprojectVersion=${{ steps.release-tag.outputs.RELEASE_VERSION }}
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: bindings/java/iota-wallet-java/lib/build/libs/*
-          tag: ${{ needs.version-or-publish.packagesPublished.java-binding.pkg.releaseTag }}
+          tag: ${{ steps.release-tag.outputs.RELEASE_TAG }}
           overwrite: false
           file_glob: true
