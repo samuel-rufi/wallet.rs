@@ -309,7 +309,7 @@ jobs:
         working-directory: bindings/java/iota-wallet-java/
         run: |
           chmod +x gradlew
-          ./gradlew jar -PprojectVersion=${{ steps.release-tag.outputs.RELEASE_VERSION }}
+          ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
