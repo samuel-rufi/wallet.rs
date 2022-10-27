@@ -321,8 +321,8 @@ jobs:
           release_name: ${{ steps.release-tag.outputs.RELEASE_TAG }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: bindings/java/iota-wallet-java/lib/build/libs/*
-          tag: ${{ steps.release-tag.outputs.RELEASE_TAG }}
+          tag: ${{ github.ref }}
+          asset_name: ${{ steps.release-tag.outputs.RELEASE_TAG }}
           overwrite: false
           file_glob: true
-          body: ${{ needs.version-or-publish.outputs.change }}
           prerelease: true
