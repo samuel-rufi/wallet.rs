@@ -307,7 +307,7 @@ jobs:
 
       - name: Echo x
         run: |
-          echo ${{ steps.release-tag.outputs.RELEASE_VERSION }}
+          echo ${{ steps.release-version.outputs.RELEASE_VERSION }}
 
       - name: Echo y
         run: |
