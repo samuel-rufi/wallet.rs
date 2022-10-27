@@ -13,7 +13,6 @@ jobs:
       commandRan: ${{ steps.covector.outputs.commandRan }}
       successfulPublish: ${{ steps.covector.outputs.successfulPublish }}
       packagesPublished: ${{ steps.covector.outputs.packagesPublished }}
-      packageVersion: ${{ steps.random-color-generator.outputs.PROJECT_VERSION }}
 
     steps:
       - uses: actions/checkout@v3
@@ -305,6 +304,14 @@ jobs:
         shell: bash
         id: release-tag
         run: echo "RELEASE_TAG=$(echo ${{ toJson(needs.version-or-publish.outputs.change) }} | jq '."java-binding".pkg.releaseTag')" >> $GITHUB_OUTPUT
+
+      - name: Echo x
+        run: |
+          echo ${{ steps.release-tag.outputs.RELEASE_VERSION }}
+
+      - name: Echo y
+        run: |
+          echo ${{ steps.release-tag.outputs.RELEASE_TAG }}
 
       - name: Build JAR
         shell: bash
