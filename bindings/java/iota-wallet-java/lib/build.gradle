@@ -64,6 +64,9 @@ task buildRustReleaseWithCustomTarget(type:Exec){
     commandLine 'cargo', 'build', '--target=' + buildTarget, '--release'
 }
 
+archivesBaseName = 'iota-wallet-java'
+project.version = project.findProperty('projectVersion')
+
 jar {
     dependsOn 'buildRustRelease'
 
