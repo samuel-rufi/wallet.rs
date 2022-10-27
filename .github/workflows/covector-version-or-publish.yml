@@ -56,7 +56,7 @@ jobs:
 
       - name: Echo outputs
         run: |
-          echo ${{ toJson(steps.covector.outputs.change) }} | jq -r '.java-binding'
+          echo ${{ toJson(steps.covector.outputs.change) }} | | jq '."iota-java-binding"'
 
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
