@@ -56,7 +56,7 @@ jobs:
 
       - name: Echo outputs
         run: |
-          echo '${{ toJson(steps.covector.outputs.change.*.version) }}'
+          echo ${{ toJson(steps.covector.outputs.change) }}
 
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
