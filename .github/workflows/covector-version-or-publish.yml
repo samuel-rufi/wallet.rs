@@ -340,7 +340,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
-          ls bindings/java/iota-wallet-java/lib/build/libs/*
+          ls bindings/java/iota-wallet-java/lib/build/libs/
       - name: Upload aarch64-apple-darwin binaries to release
         if: matrix.os == 'macos-latest'
         uses: svenstaro/upload-release-action@v2
