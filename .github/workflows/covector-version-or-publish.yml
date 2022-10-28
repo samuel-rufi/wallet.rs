@@ -326,7 +326,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: bindings/java/iota-wallet-java/lib/build/libs/*
           tag: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
-          asset_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           overwrite: false
           file_glob: true
           prerelease: true
@@ -348,8 +347,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: bindings/java/iota-wallet-java/lib/build/libs/*
           tag: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
-          asset_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           overwrite: false
           file_glob: true
           prerelease: true
-          
