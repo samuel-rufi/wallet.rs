@@ -315,20 +315,24 @@ jobs:
 
       - name: Build JAR with default targets
         shell: bash
+        id: default-jar
         working-directory: bindings/java/iota-wallet-java/
         run: |
           chmod +x gradlew
+          rm -rf lib/build/libs/*
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
+          cd lib/build/libs/ 
+          jarName=$(ls | grep jar)
+          echo "JAR_NAME=$jarName" >> $GITHUB_OUTPUT
 
       - name: Upload default binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           release_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bindings/java/iota-wallet-java/lib/build/libs/*
+          file: bindings/java/iota-wallet-java/lib/build/libs/${{ steps.default-jar.outputs.JAR_NAME }}
           tag: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           overwrite: false
-          file_glob: true
           prerelease: true
 
       - name: Build JAR with aarch64-apple-darwin target
@@ -336,19 +340,22 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_buildTarget: aarch64-apple-darwin
         shell: bash
+        id: custom-jar
         working-directory: bindings/java/iota-wallet-java/
         run: |
+          chmod +x gradlew
           rm -rf lib/build/libs/*
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
+          cd lib/build/libs/ 
+          jarName=$(ls | grep jar)
+          echo "JAR_NAME=$jarName" >> $GITHUB_OUTPUT
 
       - name: Upload aarch64-apple-darwin binaries to release
-        if: matrix.os == 'macos-latest'
         uses: svenstaro/upload-release-action@v2
         with:
           release_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bindings/java/iota-wallet-java/lib/build/libs/*
+          file: bindings/java/iota-wallet-java/lib/build/libs/${{ steps.custom-jar.outputs.JAR_NAME }}
           tag: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           overwrite: false
-          file_glob: true
           prerelease: true
