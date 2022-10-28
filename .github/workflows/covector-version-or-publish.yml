@@ -320,7 +320,9 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
+          
       - name: Upload default binaries to release
+        if: matrix.os == 'X'
         uses: svenstaro/upload-release-action@v2
         with:
           release_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
