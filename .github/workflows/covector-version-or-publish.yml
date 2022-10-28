@@ -314,7 +314,6 @@ jobs:
         run: rustup target add aarch64-apple-darwin
 
       - name: Build JAR with default targets
-        if: matrix.os == 'X'
         shell: bash
         working-directory: bindings/java/iota-wallet-java/
         run: |

@@ -64,7 +64,7 @@
       ],
       "publish": [
         {
-          "command": "echo 'publish'"
+          "command": "echo ${ pkgFile.version }"
         }
       ]
     }
