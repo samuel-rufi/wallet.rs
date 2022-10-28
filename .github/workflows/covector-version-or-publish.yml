@@ -320,7 +320,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
-          
+
       - name: Upload default binaries to release
         if: matrix.os == 'X'
         uses: svenstaro/upload-release-action@v2
@@ -342,7 +342,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
-          ls bindings/java/iota-wallet-java/lib/build/libs/
+          ls lib/build/libs/
       - name: Upload aarch64-apple-darwin binaries to release
         if: matrix.os == 'macos-latest'
         uses: svenstaro/upload-release-action@v2
