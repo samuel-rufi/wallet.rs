@@ -1,6 +1,8 @@
 {
   "tag": "rc",
   "changes": [
+    ".changes/More-Java-stuff.md",
+    ".changes/Some-Java-stuff.md",
     ".changes/getAccountIndexes.md",
     ".changes/incomingtransactions-type.md",
     ".changes/incomingtransactionstype.md",
