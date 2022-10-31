@@ -1,5 +1,12 @@
 # Changelog
 
+## \[1.0.0-rc.3]
+
+- More Java stuff
+  - [4675a8ef](https://github.com/iotaledger/wallet.rs/commit/4675a8effbe147840dc69a3b4ca8d04c41407f15) Java Breaking changw on 2022-10-31
+- Some Java stuff
+  - [4675a8ef](https://github.com/iotaledger/wallet.rs/commit/4675a8effbe147840dc69a3b4ca8d04c41407f15) Java Breaking changw on 2022-10-31
+
 ## \[1.0.0-rc.2]
 
 - Release Java version 1.0.0-rc.2
