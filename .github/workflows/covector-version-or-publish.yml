@@ -42,12 +42,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: 'version-or-publish'
 
-      - name: Log change
-        shell: bash
-        id: cov-change
-        run: |
-          echo ${{ toJson(steps.covector.outputs.change ) }}
-
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
         uses: iotaledger/create-pull-request@v3.4.1
