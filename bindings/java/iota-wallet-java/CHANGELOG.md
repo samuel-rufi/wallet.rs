@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0-rc.3]
+
+- Release Java version 1.0.0-rc.3
+  - [4afcf4c2](https://github.com/iotaledger/wallet.rs/commit/4afcf4c2598b9e527916a98aa66b54524010705e) Some change on 2022-10-31
+
 ## \[1.0.0-rc.2]
 
 - Release Java version 1.0.0-rc.2
