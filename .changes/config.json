@@ -6,7 +6,7 @@
       "publish": false
     },
     "java": {
-      "prepublish": false,
+      "prepublish": false
     }
   },
   "packages": {
