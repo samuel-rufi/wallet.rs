@@ -42,6 +42,13 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: 'version-or-publish'
 
+      - name: Log change
+        shell: bash
+        id: cov-change
+        run: |
+          covchange=$(echo ${{ toJson(steps.covector.outputs.change ) }} | jq '."java-binding"')
+          echo "JAVA_CHANGE=$covchange" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
         uses: iotaledger/create-pull-request@v3.4.1
@@ -51,7 +58,7 @@ jobs:
           title: Apply Version Updates From Current Changes
           commit-message: "apply version updates"
           labels: "version updates"
-          body: ${{ steps.covector.outputs.change }}
+          body: ${{ fromJson(steps.cov-change.outputs.covchange) }}
 
   nodejs-binding-prebuild:
     runs-on: ${{ matrix.os }}
