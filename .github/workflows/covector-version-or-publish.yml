@@ -46,8 +46,7 @@ jobs:
         shell: bash
         id: cov-change
         run: |
-          covchange=$(echo ${{ toJson(steps.covector.outputs.change ) }} | jq '."java-binding"')
-          echo "JAVA_CHANGE=$covchange" >> $GITHUB_OUTPUT
+          echo ${{ toJson(steps.covector.outputs.change ) }} | jq '."java-binding"'
 
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
