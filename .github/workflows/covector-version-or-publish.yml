@@ -232,7 +232,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest, macos-11]
         java: ["11"]
 
     steps:
@@ -310,12 +310,28 @@ jobs:
           echo "RELEASE_TAG=$tag" >> $GITHUB_OUTPUT
 
       - name: Install aarch64-apple-darwin Rust target
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-latest' || matrix.os == 'macos-11'
         run: rustup target add aarch64-apple-darwin
 
-      - name: Build JAR with default targets
+      - name: Build default JAR
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' || matrix.os == 'windows-latest'
         shell: bash
-        id: default-jar
+        id: jar-name
+        working-directory: bindings/java/iota-wallet-java/
+        run: |
+          chmod +x gradlew
+          rm -rf lib/build/libs/*
+          ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
+          cd lib/build/libs/ 
+          jarName=$(ls | grep jar)
+          echo "JAR_NAME=$jarName" >> $GITHUB_OUTPUT
+
+      - name: Build custom JAR
+        if: matrix.os == 'macos-11'
+        env:
+          ORG_GRADLE_PROJECT_buildTarget: aarch64-apple-darwin
+        shell: bash
+        id: jar-name
         working-directory: bindings/java/iota-wallet-java/
         run: |
           chmod +x gradlew
@@ -330,32 +346,7 @@ jobs:
         with:
           release_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bindings/java/iota-wallet-java/lib/build/libs/${{ steps.default-jar.outputs.JAR_NAME }}
-          tag: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
-          overwrite: false
-          prerelease: true
-
-      - name: Build JAR with aarch64-apple-darwin target
-        if: matrix.os == 'macos-latest'
-        env:
-          ORG_GRADLE_PROJECT_buildTarget: aarch64-apple-darwin
-        shell: bash
-        id: custom-jar
-        working-directory: bindings/java/iota-wallet-java/
-        run: |
-          chmod +x gradlew
-          rm -rf lib/build/libs/*
-          ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
-          cd lib/build/libs/ 
-          jarName=$(ls | grep jar)
-          echo "JAR_NAME=$jarName" >> $GITHUB_OUTPUT
-
-      - name: Upload aarch64-apple-darwin binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          release_name: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bindings/java/iota-wallet-java/lib/build/libs/${{ steps.custom-jar.outputs.JAR_NAME }}
+          file: bindings/java/iota-wallet-java/lib/build/libs/${{ steps.jar-name.outputs.JAR_NAME }}
           tag: ${{ fromJson(steps.release-tag.outputs.RELEASE_TAG) }}
           overwrite: false
           prerelease: true
