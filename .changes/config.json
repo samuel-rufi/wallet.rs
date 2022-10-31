@@ -7,8 +7,6 @@
     },
     "java": {
       "prepublish": false,
-      "version": false,
-      "publish": false
     }
   },
   "packages": {
@@ -64,7 +62,9 @@
         }
       ],
       "publish": [
-      ]
+      ],
+      "version": false,
+      "publish": false
     }
   }
 }
