@@ -2,12 +2,12 @@
   "gitSiteUrl": "https://github.com/iotaledger/wallet.rs/",
   "pkgManagers": {
     "javascript": {
-      "version": false,
+      "version": true,
       "publish": false
     },
     "java": {
-      "version": true,
-      "publish": true
+      "version": false,
+      "publish": false
     }
   },
   "packages": {
