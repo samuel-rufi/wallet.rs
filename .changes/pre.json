@@ -12,6 +12,7 @@
     ".changes/remove-list-prefix.md",
     ".changes/tx-len-validation.md",
     ".changes/uint8array-replace-number-array.md.md",
-    ".changes/init-java-binding-version.md"
+    ".changes/init-java-binding-version.md",
+    ".changes/java-release-1.0.0-rc.2.md"
   ]
 }
