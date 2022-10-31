@@ -61,8 +61,7 @@
           "command": "echo 'pre-publish'"
         }
       ],
-      "publish": [
-      ]
+      "publish": []
     }
   }
 }
