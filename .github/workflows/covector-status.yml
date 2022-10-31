@@ -6,11 +6,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - uses: volta-cli/action@v1
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run pkg -w action
       - name: covector status
-        uses: jbolda/covector/packages/action@covector-v0
+        uses: ./packages/action
         id: covector
         with:
-          command: 'status'
+          command: "status"
+      - name: dump covector output
+        env:
+          COVECTOR_CONTEXT: ${{ toJson(steps.covector) }}
+        run: echo "$COVECTOR_CONTEXT"
