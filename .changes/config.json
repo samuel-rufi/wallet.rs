@@ -1,9 +1,13 @@
 {
   "gitSiteUrl": "https://github.com/iotaledger/wallet.rs/",
   "pkgManagers": {
-    "javascript": {},
-    "java": {}
-  },
+    "javascript": {
+      "version":false
+    },
+    "java": {
+      "version":false
+    }
+  }, 
   "packages": {
     "nodejs-binding": {
       "path": "./bindings/nodejs",
@@ -61,6 +65,11 @@
         }
       ],
       "publish": []
+    },
+    "all": {
+      "version": false,
+      "build": false,
+      "publish": false
     }
   }
 }
