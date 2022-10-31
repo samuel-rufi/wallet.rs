@@ -1,19 +1,15 @@
 {
   "gitSiteUrl": "https://github.com/iotaledger/wallet.rs/",
   "pkgManagers": {
-    "javascript": {
-      "version": false,
-      "publish": false
-    },
-    "java": {
-      "version": true,
-      "publish": true
-    }
+    "javascript": {},
+    "java": {}
   },
   "packages": {
     "nodejs-binding": {
       "path": "./bindings/nodejs",
       "manager": "javascript",
+      "version":false,
+      "publish":false,
       "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version",
       "prepublish": [
         {
@@ -56,14 +52,15 @@
     "java-binding": {
       "path": "./bindings/java/iota-wallet-java",
       "manager": "java",
+      "version":true,
+      "publish":false,
       "getPublishedVersion": "curl 'https://s01.oss.sonatype.org/service/local/lucene/search?g=io.github.samuel-rufi&a=my-test&count=1' | grep -oP '(?<=<version>).*?(?=</version>)'",
       "prepublish": [
         {
           "command": "echo 'pre-publish'"
         }
       ],
-      "publish": [
-      ]
+      "publish": []
     }
   }
 }
