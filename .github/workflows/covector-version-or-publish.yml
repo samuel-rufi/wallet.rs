@@ -313,29 +313,16 @@ jobs:
         if: matrix.os == 'macos-latest' || matrix.os == 'macos-11'
         run: rustup target add aarch64-apple-darwin
 
-      - name: Build default JAR
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' || matrix.os == 'windows-latest'
-        shell: bash
-        id: jar-name
-        working-directory: bindings/java/iota-wallet-java/
-        run: |
-          chmod +x gradlew
-          rm -rf lib/build/libs/*
-          ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
-          cd lib/build/libs/ 
-          jarName=$(ls | grep jar)
-          echo "JAR_NAME=$jarName" >> $GITHUB_OUTPUT
-
-      - name: Build custom JAR
+      - name: Set buildTarget environment variable
         if: matrix.os == 'macos-11'
-        env:
-          ORG_GRADLE_PROJECT_buildTarget: aarch64-apple-darwin
+        run: echo "ORG_GRADLE_PROJECT_buildTarget=$(echo aarch64-apple-darwin)" >> $GITHUB_ENV
+
+      - name: Build JAR
         shell: bash
         id: jar-name
         working-directory: bindings/java/iota-wallet-java/
         run: |
           chmod +x gradlew
-          rm -rf lib/build/libs/*
           ./gradlew jar -PprojectVersion=${{ steps.release-version.outputs.RELEASE_VERSION }}
           cd lib/build/libs/ 
           jarName=$(ls | grep jar)
