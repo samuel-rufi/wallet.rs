@@ -64,7 +64,7 @@
           "command": "echo 'pre-publish'"
         }
       ],
-      "publish": []
+      "publish": [] 
     },
     "all": {
       "version": true,
