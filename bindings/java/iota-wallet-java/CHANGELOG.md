@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0-rc.2]
+
+- Release Java version 1.0.0-rc.2
+  - [9db3dda7](https://github.com/iotaledger/wallet.rs/commit/9db3dda79670d84d3ad9dfc348997d5c5bf7b724) Init Java version 1.0.0-rc.2 on 2022-10-31
+
 ## 1.0.0-rc.1 - 2022-10-06
 
 ### Added
@@ -28,6 +33,7 @@
   - `emitTestEvent`;
   - `bech32ToHex`;
   - `hexToBech32`;
+
 - `AccountHandle` APIs:
   - `buildAliasOutput`;
   - `buildBasicOutput`;
@@ -90,7 +96,7 @@
   - `SendNativeToken`;
   - `SendNft`;
   - `SyncAccount`;
-  
+
 ### Changed
 
 - Rust interaction through a JSON passing approach;
