@@ -6,8 +6,8 @@
       "publish": false
     },
     "java": {
-      "version": false,
-      "publish": false
+      "version": true,
+      "publish": true
     }
   },
   "packages": {
@@ -56,8 +56,8 @@
     "java-binding": {
       "path": "./bindings/java/iota-wallet-java",
       "manager": "java",
-      "version":false,
-      "publish":false,
+      "version":true,
+      "publish":true,
       "getPublishedVersion": "curl 'https://s01.oss.sonatype.org/service/local/lucene/search?g=io.github.samuel-rufi&a=my-test&count=1' | grep -oP '(?<=<version>).*?(?=</version>)'",
       "prepublish": [
         {
