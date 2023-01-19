@@ -73,6 +73,7 @@ macro_rules! env_assert {
 pub extern "system" fn Java_org_iota_api_NativeApi_initLogger(env: JNIEnv, _class: JClass, command: JString) {
     // This is a safety check to make sure that the JNIEnv is not in an exception state.
     env_assert!(env,());
+    // Must not be a one-liner, otherwise the macro will fail.
     let ret = init_logger(string_from_jni!(env, command, ()));
     jni_err_assert!(env, ret, ());
 }
