@@ -167,9 +167,15 @@ impl AccountManagerBuilder {
         };
         let coin_type = match self.coin_type {
             Some(coin_type) => coin_type,
-            None => read_manager_builder
-                .and_then(|data| data.coin_type)
-                .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?,
+            None => {
+                let coin_type = read_manager_builder
+                    .and_then(|data| data.coin_type)
+                    .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?;
+
+                self.coin_type.replace(coin_type);
+
+                coin_type
+            }
         };
 
         #[cfg(feature = "storage")]
