@@ -14,15 +14,13 @@ use serde::{Deserialize, Serialize};
 use tokio::sync::Mutex;
 use tokio::sync::RwLock;
 
-#[cfg(feature = "storage")]
-use crate::account::handle::AccountHandle;
 #[cfg(feature = "events")]
 use crate::events::EventEmitter;
 #[cfg(feature = "storage")]
 use crate::storage::constants::ROCKSDB_FOLDERNAME;
 #[cfg(feature = "storage")]
 use crate::storage::manager::ManagerStorage;
-use crate::{account_manager::AccountManager, ClientOptions};
+use crate::{account::handle::AccountHandle, account_manager::AccountManager, ClientOptions};
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 /// Builder for the account manager.
@@ -121,6 +119,7 @@ impl AccountManagerBuilder {
                 return Err(crate::Error::MissingParameter("secret_manager"));
             }
         }
+
         #[cfg(feature = "storage")]
         let storage =
             crate::storage::adapter::rocksdb::RocksdbStorageAdapter::new(storage_options.storage_path.clone())?;
@@ -130,115 +129,95 @@ impl AccountManagerBuilder {
             Box::new(storage) as Box<dyn crate::storage::adapter::StorageAdapter + Send + Sync>,
         )
         .await?;
+
         #[cfg(feature = "storage")]
-        {
-            let manager_builder = storage_manager.lock().await.get_account_manager_data().await.ok();
-            let (client_options, secret_manager, coin_type) = match manager_builder {
-                Some(ref data) => {
-                    // prioritise provided client_options and secret_manager over stored ones
-                    let client_options = match self.client_options {
-                        Some(ref options) => options.clone(),
-                        None => data
-                            .client_options
-                            .clone()
-                            .ok_or(crate::Error::MissingParameter("client_options"))?,
-                    };
-                    let secret_manager = match self.secret_manager {
-                        Some(ref secret_manager) => secret_manager.clone(),
-                        None => data
-                            .secret_manager
-                            .clone()
-                            .ok_or(crate::Error::MissingParameter("secret_manager"))?,
-                    };
-                    let coin_type = match self.coin_type {
-                        Some(coin_type) => coin_type,
-                        None => data
-                            .coin_type
-                            .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?,
-                    };
+        let read_manager_builder = storage_manager.lock().await.get_account_manager_data().await.ok();
+        #[cfg(not(feature = "storage"))]
+        let read_manager_builder: Option<AccountManagerBuilder> = None;
 
-                    self.client_options.replace(client_options.clone());
-                    self.secret_manager.replace(secret_manager.clone());
-                    self.coin_type.replace(coin_type);
+        let new_provided_client = read_manager_builder.is_none();
 
-                    (client_options, secret_manager, coin_type)
-                }
-                // If no account manager data exist, we will set it
-                None => (
-                    self.client_options
-                        .clone()
-                        .ok_or(crate::Error::MissingParameter("client_options"))?,
-                    self.secret_manager
-                        .clone()
-                        .ok_or(crate::Error::MissingParameter("secret_manager"))?,
-                    self.coin_type
-                        .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?,
-                ),
-            };
+        // prioritise provided client_options and secret_manager over stored ones
+        let client_options = match &self.client_options {
+            Some(options) => options.clone(),
+            None => {
+                let client_options = read_manager_builder
+                    .as_ref()
+                    .and_then(|data| data.client_options.clone())
+                    .ok_or(crate::Error::MissingParameter("client_options"))?;
 
-            // Store account manager data in storage
-            storage_manager.lock().await.save_account_manager_data(&self).await?;
+                self.client_options.replace(client_options.clone());
 
-            let client = client_options.clone().finish()?;
-
-            #[cfg(feature = "events")]
-            let event_emitter = Arc::new(Mutex::new(EventEmitter::new()));
-
-            let mut accounts = storage_manager.lock().await.get_accounts().await.unwrap_or_default();
-
-            let mut account_handles: Vec<AccountHandle> = accounts
-                .into_iter()
-                .map(|a| {
-                    AccountHandle::new(
-                        a,
-                        client.clone(),
-                        secret_manager.clone(),
-                        #[cfg(feature = "events")]
-                        event_emitter.clone(),
-                        storage_manager.clone(),
-                    )
-                })
-                .collect::<_>();
-
-            // If the manager builder is not set, it means the user provided it and we need to update the addresses.
-            // In the other case it was loaded from the database and addresses are up to date.
-            if manager_builder.is_none() {
-                for account in account_handles.iter_mut() {
-                    account.update_account_with_new_client(client.clone()).await?;
-                }
+                client_options
             }
+        };
 
-            return Ok(AccountManager {
-                accounts: Arc::new(RwLock::new(account_handles)),
-                background_syncing_status: Arc::new(AtomicUsize::new(0)),
-                client_options: Arc::new(RwLock::new(client_options)),
-                coin_type: Arc::new(AtomicU32::new(coin_type)),
-                secret_manager,
-                #[cfg(feature = "events")]
-                event_emitter,
-                storage_options,
-                storage_manager,
-            });
+        let secret_manager = match &self.secret_manager {
+            Some(secret_manager) => secret_manager.clone(),
+            None => {
+                let secret_manager = read_manager_builder
+                    .as_ref()
+                    .and_then(|data| data.secret_manager.clone())
+                    .ok_or(crate::Error::MissingParameter("secret_manager"))?;
+
+                self.secret_manager.replace(secret_manager.clone());
+
+                secret_manager
+            }
+        };
+        let coin_type = match self.coin_type {
+            Some(coin_type) => coin_type,
+            None => read_manager_builder
+                .and_then(|data| data.coin_type)
+                .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?,
+        };
+
+        #[cfg(feature = "storage")]
+        // Store account manager data in storage
+        storage_manager.lock().await.save_account_manager_data(&self).await?;
+
+        let client = client_options.clone().finish()?;
+
+        #[cfg(feature = "events")]
+        let event_emitter = Arc::new(Mutex::new(EventEmitter::new()));
+
+        #[cfg(feature = "storage")]
+        let accounts = storage_manager.lock().await.get_accounts().await.unwrap_or_default();
+        #[cfg(not(feature = "storage"))]
+        let accounts = Vec::new();
+        let mut account_handles: Vec<AccountHandle> = accounts
+            .into_iter()
+            .map(|a| {
+                AccountHandle::new(
+                    a,
+                    client.clone(),
+                    secret_manager.clone(),
+                    #[cfg(feature = "events")]
+                    event_emitter.clone(),
+                    #[cfg(feature = "storage")]
+                    storage_manager.clone(),
+                )
+            })
+            .collect::<_>();
+
+        // If the manager builder is not set, it means the user provided it and we need to update the addresses.
+        // In the other case it was loaded from the database and addresses are up to date.
+        if new_provided_client {
+            for account in account_handles.iter_mut() {
+                account.update_account_with_new_client(client.clone()).await?;
+            }
         }
 
         Ok(AccountManager {
-            accounts: Arc::new(RwLock::new(Vec::new())),
+            accounts: Arc::new(RwLock::new(account_handles)),
             background_syncing_status: Arc::new(AtomicUsize::new(0)),
-            client_options: Arc::new(RwLock::new(
-                self.client_options
-                    .ok_or(crate::Error::MissingParameter("client_options"))?,
-            )),
-            coin_type: Arc::new(AtomicU32::new(
-                self.coin_type
-                    .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?,
-            )),
-            secret_manager: self
-                .secret_manager
-                .ok_or(crate::Error::MissingParameter("secret_manager"))?,
+            client_options: Arc::new(RwLock::new(client_options)),
+            coin_type: Arc::new(AtomicU32::new(coin_type)),
+            secret_manager,
             #[cfg(feature = "events")]
-            event_emitter: Arc::new(Mutex::new(EventEmitter::new())),
+            event_emitter,
             #[cfg(feature = "storage")]
-            storage_options: StorageOptions { ..Default::default() },
+            storage_options,
             #[cfg(feature = "storage")]
             storage_manager,
         })
