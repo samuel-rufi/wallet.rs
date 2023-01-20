@@ -135,54 +135,48 @@ impl AccountManagerBuilder {
         #[cfg(not(feature = "storage"))]
         let read_manager_builder: Option<AccountManagerBuilder> = None;
 
-        let new_provided_client = read_manager_builder.is_none();
-
         // prioritise provided client_options and secret_manager over stored ones
-        let client_options = match &self.client_options {
-            Some(options) => options.clone(),
-            None => {
-                let client_options = read_manager_builder
-                    .as_ref()
-                    .and_then(|data| data.client_options.clone())
-                    .ok_or(crate::Error::MissingParameter("client_options"))?;
+        let new_provided_client_options = if self.client_options.is_none() {
+            let loaded_client_options = read_manager_builder
+                .as_ref()
+                .and_then(|data| data.client_options.clone())
+                .ok_or(crate::Error::MissingParameter("client_options"))?;
 
-                self.client_options.replace(client_options.clone());
-
-                client_options
-            }
+            // Update self so it get sused and stored again
+            self.client_options.replace(loaded_client_options);
+            false
+        } else {
+            true
         };
 
-        let secret_manager = match &self.secret_manager {
-            Some(secret_manager) => secret_manager.clone(),
-            None => {
-                let secret_manager = read_manager_builder
-                    .as_ref()
-                    .and_then(|data| data.secret_manager.clone())
-                    .ok_or(crate::Error::MissingParameter("secret_manager"))?;
+        if self.secret_manager.is_none() {
+            let secret_manager = read_manager_builder
+                .as_ref()
+                .and_then(|data| data.secret_manager.clone())
+                .ok_or(crate::Error::MissingParameter("secret_manager"))?;
 
-                self.secret_manager.replace(secret_manager.clone());
+            // Update self so it get sused and stored again
+            self.secret_manager.replace(secret_manager);
+        }
 
-                secret_manager
-            }
-        };
-        let coin_type = match self.coin_type {
-            Some(coin_type) => coin_type,
-            None => {
-                let coin_type = read_manager_builder
-                    .and_then(|data| data.coin_type)
-                    .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?;
+        if self.coin_type.is_none() {
+            let coin_type = read_manager_builder
+                .and_then(|data| data.coin_type)
+                .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?;
 
-                self.coin_type.replace(coin_type);
-
-                coin_type
-            }
-        };
+            // Update self so it get sused and stored again
+            self.coin_type.replace(coin_type);
+        }
 
         #[cfg(feature = "storage")]
         // Store account manager data in storage
         storage_manager.lock().await.save_account_manager_data(&self).await?;
 
-        let client = client_options.clone().finish()?;
+        let client = self
+            .client_options
+            .clone()
+            .ok_or(crate::Error::MissingParameter("client_options"))?
+            .finish()?;
 
         #[cfg(feature = "events")]
         let event_emitter = Arc::new(Mutex::new(EventEmitter::new()));
@@ -197,7 +191,9 @@ impl AccountManagerBuilder {
                 AccountHandle::new(
                     a,
                     client.clone(),
-                    secret_manager.clone(),
+                    self.secret_manager
+                        .clone()
+                        .expect("secret_manager needs to be provided"),
                     #[cfg(feature = "events")]
                     event_emitter.clone(),
                     #[cfg(feature = "storage")]
@@ -208,7 +204,7 @@ impl AccountManagerBuilder {
 
         // If the manager builder is not set, it means the user provided it and we need to update the addresses.
         // In the other case it was loaded from the database and addresses are up to date.
-        if new_provided_client {
+        if new_provided_client_options {
             for account in account_handles.iter_mut() {
                 account.update_account_with_new_client(client.clone()).await?;
             }
@@ -217,9 +213,18 @@ impl AccountManagerBuilder {
         Ok(AccountManager {
             accounts: Arc::new(RwLock::new(account_handles)),
             background_syncing_status: Arc::new(AtomicUsize::new(0)),
-            client_options: Arc::new(RwLock::new(client_options)),
-            coin_type: Arc::new(AtomicU32::new(coin_type)),
-            secret_manager,
+            client_options: Arc::new(RwLock::new(
+                self.client_options
+                    .clone()
+                    .ok_or(crate::Error::MissingParameter("client_options"))?,
+            )),
+            coin_type: Arc::new(AtomicU32::new(
+                self.coin_type
+                    .ok_or(crate::Error::MissingParameter("coin_type (IOTA: 4218, Shimmer: 4219)"))?,
+            )),
+            secret_manager: self
+                .secret_manager
+                .ok_or(crate::Error::MissingParameter("secret_manager"))?,
             #[cfg(feature = "events")]
             event_emitter,
             #[cfg(feature = "storage")]
