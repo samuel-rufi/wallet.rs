@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.0.3-rc.18]
+
+- Change `AccountSyncOptions` default values to all true.
+  - [7ce31c65](https://github.com/iotaledger/wallet.rs/commit/7ce31c652f73cca77acba2359c515a2059afe34d) Change AccountSyncOptions default values to all true ([#1763](https://github.com/iotaledger/wallet.rs/pull/1763)) on 2023-01-26
+- Stop endlessly requesting inaccessible incoming trasactions.
+  - [88a39a06](https://github.com/iotaledger/wallet.rs/commit/88a39a0639e92f866f0e9da6bb835c69041e12c7) Stop endlessly requesting inaccessible incoming transactions ([#1756](https://github.com/iotaledger/wallet.rs/pull/1756)) on 2023-01-27
+
 ## \[2.0.3-rc.17]
 
 - Make the voting output mandatory in input selection for voting functions.
